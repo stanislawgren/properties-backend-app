@@ -1,0 +1,62 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Weather {
+  observationTime: String!
+  temperature: Int!
+  weatherCode: Float!
+  weatherIcons: [String!]!
+  weatherDescriptions: [String!]!
+  windSpeed: Int!
+  windDegree: Int!
+  windDir: String!
+  pressure: Int!
+  precip: Int!
+  humidity: Int!
+  cloudcover: Int!
+  feelslike: Int!
+  uvIndex: Int!
+  visibility: Int!
+}
+
+type Property {
+  _id: ID!
+  city: String!
+  street: String!
+  state: String!
+  zipCode: String!
+  weather: Weather!
+  lat: String!
+  long: String!
+}
+
+type Query {
+  getAllProperties(filters: PropertyFilterInput): [Property!]!
+  getPropertyById(id: String!): Property!
+}
+
+input PropertyFilterInput {
+  city: String
+  zipCode: String
+  state: String
+  sortByDate: SortOrder
+}
+
+"""Sorting order enum type"""
+enum SortOrder {
+  ASC
+  DESC
+}
+
+type Mutation {
+  createProperty(createPropertyInput: CreatePropertyInput!): Property!
+  deletePropertyById(id: String!): String!
+}
+
+input CreatePropertyInput {
+  city: String!
+  street: String!
+  state: String!
+  zipCode: String!
+}
