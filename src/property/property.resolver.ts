@@ -7,7 +7,7 @@ import { PropertyFilterInput } from "./dto/property-filter.input";
 
 @Resolver(() => Property)
 export class PropertyResolver {
-  constructor(private readonly propertyService: PropertyService) { }
+  constructor(private readonly propertyService: PropertyService) {}
 
   @Query(() => [Property])
   @UsePipes(new ValidationPipe())

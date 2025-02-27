@@ -34,7 +34,7 @@ Add .env file in root folder and paste proper data (db is provided below with te
 
 ```bash
 WEATHERSTACK_API_KEY="YOUR_KEY"
-MONGODB="mongodb+srv://testuser:testuser@cluster0.gfj0o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+MONGODB="MONGO_LINK"
 ```
 
 # How to
