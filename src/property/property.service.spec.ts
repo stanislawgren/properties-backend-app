@@ -5,7 +5,6 @@ import { CreatePropertyInput } from "./dto/create-property.input";
 import { GraphQLError } from "graphql";
 import axios from "axios";
 import { WeatherDataAPI } from "./types/property.interface";
-import { Property } from "./property.schema";
 
 jest.mock("axios");
 const mockedAxios = axios as jest.Mocked<typeof axios>;
