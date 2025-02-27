@@ -1,38 +1,21 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# COVERTREE_WEATHERSTACK_API_TASK
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Tech stack
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+- Nest.js
+- TypeScript
+- MongoDB (used in cloud - to access database paste proper data to .env file)
+- GraphQL (code-first)
+- Jest
+- Weatherstack API
 
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
+## Installation
 
 ```bash
 $ npm install
 ```
 
-## Compile and run the project
+## Running the app
 
 ```bash
 # development
@@ -45,55 +28,222 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Run tests
+## .env file
+
+Add .env file in root folder and paste proper data (db is provided below with testuser account)
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+WEATHERSTACK_API_KEY="YOUR_KEY"
+MONGODB="mongodb+srv://testuser:testuser@cluster0.gfj0o.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 ```
 
-## Deployment
+# How to
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+To test API, run project following above instructions and visit `http://localhost:3000/graphql` to use queries and mutations.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+## User Stories
+
+1. As a user I can query all the properties.
+
+example:
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+query GetProperties {
+  getProperties {
+    city
+    lat
+    long
+    state
+    street
+    zipCode
+  }
+}
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+2. As a user I am able to sort the properties by date of creation
 
-## Resources
+```bash
+query GetProperties($filters: PropertyFilterInput) {
+  getProperties(filters: $filters) {
+    city
+    lat
+    long
+    state
+    street
+    zipCode
+  }
+}
+```
 
-Check out a few resources that may come in handy when working with NestJS:
+You can choose to sort in ASC or DESC order:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+```bash
 
-## Support
+{
+  "filters": {
+    "sortByDate": "DESC"
+  }
+}
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+{
+  "filters": {
+    "sortByDate": "ASC"
+  }
+}
 
-## Stay in touch
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+3. As a user, I’m able to filter the properties list by their city, zip code and state, where they are located.
 
-## License
+Same query with additional filters:
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+```bash
+query GetProperties($filters: PropertyFilterInput) {
+  getProperties(filters: $filters) {
+    city
+    lat
+    long
+    state
+    street
+    zipCode
+  }
+}
+```
+
+filters ex.:
+
+```bash
+
+{
+  "filters": {
+    "sortByDate": "DESC",
+    "state": "NY",
+    "zipCode": "10001",
+    "city": "New York"
+  }
+}
+
+```
+
+assumption: filters are case-insesitive, but work on exact values
+
+4. As a user, I can query details of any property.
+
+It's possible by providing ID of property to query
+
+```bash
+query GetPropertyById($getPropertyByIdId: String!) {
+  getPropertyById(id: $getPropertyByIdId) {
+    city
+    lat
+    long
+    state
+    street
+    weather {
+      cloudcover
+      feelslike
+      humidity
+      observationTime
+      precip
+      pressure
+      temperature
+      uvIndex
+      visibility
+      weatherCode
+      weatherDescriptions
+      weatherIcons
+      windDegree
+      windDir
+      windSpeed
+    }
+  }
+}
+```
+
+```bash
+
+{
+  "getPropertyByIdId": "67c035ddd62ad6130e45e080"
+}
+
+```
+
+5. As a user, I can add a new property.
+
+```bash
+mutation Mutation($createPropertyInput: CreatePropertyInput!) {
+  createProperty(createPropertyInput: $createPropertyInput) {
+    lat
+    long
+    weather {
+      temperature
+      cloudcover
+      feelslike
+      humidity
+    }
+  }
+}
+```
+
+Input (zipCode must be exactly 5 digits, otherwise it will produce an error):
+
+```bash
+{
+  "createPropertyInput": {
+    "city": "Homer",
+    "state": "AL",
+    "street": "401 Cozy Cove Dr",
+    "zipCode": "99603"
+  }
+}
+```
+
+6. As a user, I can delete any property
+
+It's possible by providing ID of property to mutation
+
+```bash
+
+mutation Mutation($deletePropertyByIdId: String!) {
+  deletePropertyById(id: $deletePropertyByIdId)
+}
+
+```
+
+Input:
+
+```bash
+{
+  "deletePropertyByIdId": "67c04556be5ef4f7e01bc3d4"
+}
+```
+
+Property Properties:
+
+```bash
+getProperties {
+    _id
+    city
+    lat
+    long
+    state
+    street
+    weather {
+      cloudcover
+      feelslike
+      humidity
+      observationTime
+      precip
+      pressure
+      temperature
+      uvIndex
+      visibility
+      weatherCode
+      weatherDescriptions
+      weatherIcons
+      windDegree
+      windDir
+      windSpeed
+    }
+  }
+```

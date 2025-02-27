@@ -5,7 +5,7 @@
 type Weather {
   observationTime: String!
   temperature: Int!
-  weatherCode: Float!
+  weatherCode: Int!
   weatherIcons: [String!]!
   weatherDescriptions: [String!]!
   windSpeed: Int!
@@ -32,7 +32,7 @@ type Property {
 }
 
 type Query {
-  getAllProperties(filters: PropertyFilterInput): [Property!]!
+  getProperties(filters: PropertyFilterInput): [Property!]!
   getPropertyById(id: String!): Property!
 }
 

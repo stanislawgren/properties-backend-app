@@ -59,7 +59,7 @@ describe("PropertyResolver", () => {
       sortByDate: SortOrder.ASC,
     };
 
-    const result = await resolver.getAllProperties(filters);
+    const result = await resolver.getProperties(filters);
     expect(result).toEqual([mockProperty]);
     expect(mockPropertyService.getProperties).toHaveBeenCalledWith(filters);
   });

@@ -12,7 +12,7 @@ export class Weather {
   @Prop()
   temperature: number;
 
-  @Field()
+  @Field(() => Int)
   @Prop()
   weatherCode: number;
 
