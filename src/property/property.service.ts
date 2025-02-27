@@ -12,7 +12,7 @@ import { PropertyInputWithWeather, WeatherDataAPI } from "src/property/types/pro
 
 @Injectable()
 export class PropertyService {
-  constructor(@InjectModel(Property.name) private propertyModel: Model<Property>) {}
+  constructor(@InjectModel(Property.name) private propertyModel: Model<Property>) { }
 
   async getProperties(filters: PropertyFilterInput): Promise<Property[]> {
     const { city, zipCode, state, sortByDate } = filters || {};
@@ -45,10 +45,9 @@ export class PropertyService {
   }
 
   private async getWeather(address: string): Promise<Weather & { lat: string; lon: string }> {
-    const API_KEY = process.env.WEATHERSTACK_API_KEY;
     const response = await axios.get<WeatherDataAPI>(`http://api.weatherstack.com/current`, {
       params: {
-        access_key: API_KEY,
+        access_key: process.env.WEATHERSTACK_API_KEY,
         query: address,
       },
     });
