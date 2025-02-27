@@ -30,7 +30,7 @@ $ npm run start:prod
 
 ## .env file
 
-Add .env file in root folder and paste proper data (db is provided below with testuser account)
+Add .env file in root folder and paste proper data (delivered directly to the recruiter)
 
 ```bash
 WEATHERSTACK_API_KEY="YOUR_KEY"
