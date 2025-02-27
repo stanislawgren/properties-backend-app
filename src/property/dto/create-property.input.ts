@@ -13,6 +13,6 @@ export class CreatePropertyInput {
   state: string;
 
   @Field()
-  @Matches(/^\d{5}$/, { message: "ZipCode should be 5 letters." })
+  @Matches(/^\d{5}$/, { message: "ZipCode should be 5 digits." })
   zipCode: string;
 }

@@ -8,11 +8,11 @@ import { GraphQLError } from "graphql";
 import axios from "axios";
 import { PropertyFilterInput } from "./dto/property-filter.input";
 import { SortOrder } from "src/enums/sort-order.enum";
-import { WeatherDataAPI } from "src/types/weather-data-api.interface";
+import { PropertyInputWithWeather, WeatherDataAPI } from "src/property/types/property.interface";
 
 @Injectable()
 export class PropertyService {
-  constructor(@InjectModel(Property.name) private propertyModel: Model<Property>) { }
+  constructor(@InjectModel(Property.name) private propertyModel: Model<Property>) {}
 
   async getProperties(filters: PropertyFilterInput): Promise<Property[]> {
     const { city, zipCode, state, sortByDate } = filters || {};
@@ -33,13 +33,10 @@ export class PropertyService {
     return await this.propertyModel.findById(id).exec();
   }
 
-  async create(createPropertyInput: CreatePropertyInput): Promise<Property> {
+  async createProperty(createPropertyInput: CreatePropertyInput): Promise<Property> {
     const { lat, lon, ...weatherData } = await this.getWeather(`${createPropertyInput.zipCode}, United States of America`);
-
-    const propertyWithWeather: CreatePropertyInput & { weather: Weather, lat: string, long: string } = { ...createPropertyInput, weather: weatherData, lat: lat, long: lon };
-    const createdProperty = new this.propertyModel(propertyWithWeather);
-
-    return await createdProperty.save();
+    const propertyWithWeather: PropertyInputWithWeather = { ...createPropertyInput, weather: weatherData, lat: lat, long: lon };
+    return await new this.propertyModel(propertyWithWeather).save();
   }
 
   async deletePropertyById(id: string): Promise<String> {
@@ -47,7 +44,7 @@ export class PropertyService {
     return result !== null ? "Property deleted" : "Property not found";
   }
 
-  private async getWeather(address: string): Promise<Weather & { lat: string, lon: string }> {
+  private async getWeather(address: string): Promise<Weather & { lat: string; lon: string }> {
     const API_KEY = process.env.WEATHERSTACK_API_KEY;
     const response = await axios.get<WeatherDataAPI>(`http://api.weatherstack.com/current`, {
       params: {
@@ -57,7 +54,7 @@ export class PropertyService {
     });
 
     if (response?.data.success === false) {
-      throw new GraphQLError("Weatherstack API error - code: " + response?.data.error.code)
+      throw new GraphQLError("Weatherstack API error - code: " + response?.data.error.code);
     }
 
     return {
@@ -78,6 +75,6 @@ export class PropertyService {
       visibility: response?.data.current.visibility,
       lat: response?.data.location.lat,
       lon: response?.data.location.lon,
-    }
+    };
   }
 }

@@ -5,7 +5,9 @@ import { join } from "path";
 import { PropertyModule } from "./property/property.module";
 import { MongooseModule } from "@nestjs/mongoose";
 import { ApolloServerPluginLandingPageLocalDefault } from "@apollo/server/plugin/landingPage/default";
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule } from "@nestjs/config";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
 
 @Module({
   imports: [
@@ -19,5 +21,6 @@ import { ConfigModule } from '@nestjs/config';
     }),
     PropertyModule,
   ],
+  providers: [AppController, AppService],
 })
-export class AppModule { }
+export class AppModule {}

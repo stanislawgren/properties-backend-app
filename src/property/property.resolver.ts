@@ -23,7 +23,7 @@ export class PropertyResolver {
   @Mutation(() => Property)
   @UsePipes(new ValidationPipe())
   async createProperty(@Args("createPropertyInput") createPropertyInput: CreatePropertyInput): Promise<Property> {
-    return this.propertyService.create(createPropertyInput);
+    return this.propertyService.createProperty(createPropertyInput);
   }
 
   @Mutation(() => String)

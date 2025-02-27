@@ -3,15 +3,15 @@ import { SortOrder } from "src/enums/sort-order.enum";
 
 @InputType()
 export class PropertyFilterInput {
-    @Field({ nullable: true })
-    city?: string;
+  @Field({ nullable: true })
+  city?: string;
 
-    @Field({ nullable: true })
-    zipCode?: string;
+  @Field({ nullable: true })
+  zipCode?: string;
 
-    @Field({ nullable: true })
-    state?: string;
+  @Field({ nullable: true })
+  state?: string;
 
-    @Field(() => SortOrder, { nullable: true })
-    sortByDate?: SortOrder;
+  @Field(() => SortOrder, { nullable: true })
+  sortByDate?: SortOrder;
 }
